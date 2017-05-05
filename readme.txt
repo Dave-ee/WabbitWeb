@@ -1,10 +1,10 @@
 WabbitWeb
 
 Author: 		Dave-ee Jones
-Version: 		1.
+Version: 		1.0.1
 Category: 		Tool/General
-Target: 		Anything with a web browser
-Attack: 		RNDIS
+Target: 		Windows 7, 8, 8.1, 10
+Attack: 		RNDIS, HID
 Requires:		Impacket
 
 Features:
