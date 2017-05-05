@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <meta charset="utf-8">
+        <title>WabbitWeb - Payloads</title>
+		<link rel="shortcut icon" href="http://172.16.64.1:8080/web/icon.ico" type="image/x-icon">
+        <meta name="description" content="">
+        <link rel="stylesheet" href="http://172.16.64.1:8080/web/style.css">
+		<script src="../scripts/jmin.js"></script>
+		<script>
+			function startA() {
+				window.open("http://172.16.64.1:8080/web/la.html","_self")
+			}
+				
+			function startB() {
+				window.open("http://172.16.64.1:8080/web/lb.html","_self")
+			}
+				
+			function startC() {
+				window.open("http://172.16.64.1:8080/web/lc.html","_self")
+			}
+		</script>
+	</head>
+        <body>
+        	<ul class="topnav">
+                <li><a href="http://172.16.64.1:8080/">Home</a></li>
+				<li><a class="active" href="http://172.16.64.1:8080/web/payload.html">Payload Launcher</a></li>
+				<li><a href="http://172.16.64.1:8080/web/editor.html">Payload Editor</a></li>
+				<li><a href="http://172.16.64.1:8080/web/smb.html">SMB Launcher</a></li>
+				<li class="right"><a class="power" href="http://172.16.64.1:8080/web/exit.html">Shutdown</a></li>
+            </ul>
+			<div style="text-align:center;">
+                <h2>Payload Launcher</h2>
+				<p>Launching a payload causes WabbitWeb to stop until the payload finishes (indicated by a slow-flashing blue LED on the Bunny).</p>
+				<p>Be aware that some payloads may force WabbitWeb to shut down, meaning after the payload is finished you have to reboot the Bunny to come back to this point.</p>
+            </div>
+			<div style="text-align:center; height:600px;">
+				<button class="buttonBig" onclick="startA()">Launch Payload A</button>
+				<button class="buttonBig" onclick="startB()">Launch Payload B</button>
+				<button class="buttonBig" onclick="startC()">Launch Payload C</button>
+			</div>
+        </body>
+</html> 

@@ -1,0 +1,175 @@
+<style type="text/css">
+	head {
+		font-family: calibri, arial, sans-serif;
+        background-color: #404040;
+        color: white;
+	}
+	body {
+            font-family: calibri, arial, sans-serif;
+            background-color: #202020;
+            color: white;
+        }
+		h2 {
+			color: #00c7ff;
+		}
+		textarea {
+			display: block;
+			width: 80%;
+			height: 200px;
+			margin: auto;
+			box-sizing: border-box;
+			border: 2px solid #00c7ff;
+			border-radius: 4px;
+			background-color: #404040;
+			font-size: 16px;
+			color: white;
+			resize: vertical;
+		}
+		p.warning {
+			display: inline;
+			color: #ff0000;
+			background-color: #404040;
+			padding: 15px;
+			font-size: 20px;
+		}
+		input[type=submit] {
+			background: #00c7ff;
+			background: -webkit-linear-gradient(90deg, #00c7ff, #004fb7);
+			background: -o-linear-gradient(90deg, #00c7ff, #004fb7);
+			background: -moz-linear-gradient(90deg, #00c7ff, #004fb7);
+			background: linear-gradient(90deg, #00c7ff, #004fb7);
+            border: none;
+			border-radius: 5px 25px;
+            color: white;
+            padding: 15px 32px;
+			margin-top: 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+			font-size: 16px;
+            cursor: pointer;
+			width: 40%;
+            height: 20%;
+			box-shadow: 5px 5px #404040;
+		}
+		input[type=submit]:hover {
+            	background: #00c7ff;
+        }
+        .exit {
+           	height: 400px;
+            position: relative;
+            text-align: center;
+        }
+        .exit h1 {
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .buttonBig {
+			background: #00c7ff;
+			background: -webkit-linear-gradient(90deg, #00c7ff, #004fb7);
+			background: -o-linear-gradient(90deg, #00c7ff, #004fb7);
+			background: -moz-linear-gradient(90deg, #00c7ff, #004fb7);
+			background: linear-gradient(90deg, #00c7ff, #004fb7);
+            border: none;
+			border-radius: 5px 25px;
+            color: white;
+            padding: 15px 32px;
+			margin-bottom: 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+            width: 80%;
+            height: 20%;
+			box-shadow: 5px 5px #404040;
+        }
+        .buttonBig:hover {
+            background: #00c7ff;
+        }
+		.buttonPE {
+			background: #00c7ff;
+			background: -webkit-linear-gradient(90deg, #00c7ff, #004fb7);
+			background: -o-linear-gradient(90deg, #00c7ff, #004fb7);
+			background: -moz-linear-gradient(90deg, #00c7ff, #004fb7);
+			background: linear-gradient(90deg, #00c7ff, #004fb7);
+            border: none;
+			border-radius: 5px 25px;
+            color: white;
+            padding: 15px 32px;
+			margin: 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+            width: 20%;
+            height: 20%;
+			box-shadow: 5px 5px #404040;
+        }
+        .buttonPE:hover {
+            background: #00c7ff;
+        }
+		.buttonPE_ACTIVE {
+			background: #00c7ff;
+            border: none;
+			border-radius: 5px 25px;
+            color: white;
+            padding: 15px 32px;
+			margin: 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+            width: 20%;
+            height: 20%;
+			box-shadow: 5px 5px #404040;
+        }
+        ul.topnav {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #404040;
+			border-radius: 4px 20px;
+        }
+        ul.topnav li a {
+            display: block;
+            color: #00c7ff;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        ul.topnav li a:not(.power) {
+            float: left;
+        }
+        ul.topnav li a:hover:not(.power):not(.active) {
+            background: #00c7ff;
+			color: white;
+        }
+        ul.topnav li a.active {
+            background: #00c7ff;
+			color: white;
+        }
+        ul.topnav li.right a {
+            float: right;
+			color: white;
+        }
+        ul.topnav li.right a.power {
+            background: #ba0000;
+        }
+        ul.topnav li.right a.power:hover {
+            background: #00c7ff;
+            float: right;
+        }
+        @media screen and (max-width: 600px) {
+            ul.topnav li.right,
+            ul.topnav li {
+				float: none;
+			}
+        }
+</style>

