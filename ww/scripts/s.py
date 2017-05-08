@@ -74,7 +74,7 @@ class http_handler(BaseHTTPServer.BaseHTTPRequestHandler):
 		self.send_header('Content-type','text/html')
 		self.end_headers()
 		self.wfile.write("<html>")
-		self.wfile.write("	<meta http-equiv='refresh' content='1;url=http://172.16.64.1:8080/web/editor.html'/>")
+		self.wfile.write("	<meta http-equiv='refresh' content='1;url=http://172.16.64.1:80/web/editor.html'/>")
 		self.wfile.write("	<body>")
 		self.wfile.write("		<p>Redirecting to editor...</p>")
 		self.wfile.write("		<h1>Payload Details</h1>")
@@ -104,7 +104,7 @@ class http_handler(BaseHTTPServer.BaseHTTPRequestHandler):
 		
 	
 def run():
-	httpd = SocketServer.TCPServer(('172.16.64.1',8080),http_handler)
+	httpd = SocketServer.TCPServer(('172.16.64.1',80),http_handler)
 	while bRunning:
 		httpd.handle_request()
 	

@@ -15,7 +15,6 @@ readonly LOG_FILE="/root/udisk/logs/WabbitWeb.log"
 readonly LA_FILE="/root/udisk/logs/WabbitWeb_A.log"
 readonly LB_FILE="/root/udisk/logs/WabbitWeb_B.log"
 readonly LC_FILE="/root/udisk/logs/WabbitWeb_C.log"
-readonly SMB_FILE = "/root/udisk/logs/WabbitWeb_SMB.log"
 
 # Let's start!
 LED SETUP
@@ -31,8 +30,8 @@ mkdir -p "$PAYLOAD_DIR/ww/mfs"
 
 # Mount the Bunny's udisk
 echo "+ Mounting file system.." >> $LOG_FILE
-mount -o bind "/root/udisk" "$PAYLOAD_DIR/ww/mfs"
-if [ -d "$PAYLOAD_DIR/ww/mfs/payloads" ]
+mount -o bind "/" "$PAYLOAD_DIR/ww/mfs"
+if [ -d "$PAYLOAD_DIR/ww/mfs/root" ]
 then
 	echo "+ Successfully mounted directory" >> $LOG_FILE
 else
