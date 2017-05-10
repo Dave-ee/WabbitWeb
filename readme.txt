@@ -1,7 +1,7 @@
 WabbitWeb
 
 Author: 		Dave-ee Jones
-Version: 		1.0.4
+Version: 		1.0.5
 Category: 		Tool/General
 Target: 		Windows 7, 8, 8.1, 10
 Attack: 		RNDIS, HID
