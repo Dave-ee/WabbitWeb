@@ -3,37 +3,65 @@
     <head>
         <meta charset="utf-8">
 		<title>WabbitWeb - Editor</title>
-		<link rel="shortcut icon" href="icon.ico" type="image/x-icon">
+		<link rel="shortcut icon" href="http://172.16.64.1/icon" type="image/x-icon">
         <meta name="description" content="">
-        <link rel="stylesheet" href="http://172.16.64.1:80/web/style.css">
+        <link rel="stylesheet" href="http://172.16.64.1/css">
 		<script>
 			function setToA() {
-				document.getElementById('buttonPEA').className = "buttonPE_ACTIVE";
-				document.getElementById('buttonPEB').className = "buttonPE";
-				document.getElementById('buttonPEC').className = "buttonPE";
-				document.getElementById('l').value = "a";
+				var buttonPEA = document.getElementById('buttonPEA');
+				var buttonPEB = document.getElementById('buttonPEB');
+				var buttonPEC = document.getElementById('buttonPEC');
+				var l = document.getElementById('l');
+				buttonPEA.className = "buttonPE_ACTIVE";
+				buttonPEB.className = "buttonPE";
+				buttonPEC.className = "buttonPE";
+				l.value = "a";
 			}
 			function setToB() {
-				document.getElementById('buttonPEA').className = "buttonPE";
-				document.getElementById('buttonPEB').className = "buttonPE_ACTIVE";
-				document.getElementById('buttonPEC').className = "buttonPE";
-				document.getElementById('l').value = "b";
+				var buttonPEA = document.getElementById('buttonPEA');
+				var buttonPEB = document.getElementById('buttonPEB');
+				var buttonPEC = document.getElementById('buttonPEC');
+				var l = document.getElementById('l');
+				buttonPEA.className = "buttonPE";
+				buttonPEB.className = "buttonPE_ACTIVE";
+				buttonPEC.className = "buttonPE";
+				l.value = "b";
 			}
 			function setToC() {
-				document.getElementById('buttonPEA').className = "buttonPE";
-				document.getElementById('buttonPEB').className = "buttonPE";
-				document.getElementById('buttonPEC').className = "buttonPE_ACTIVE";
-				document.getElementById('l').value = "c";
+				var buttonPEA = document.getElementById('buttonPEA');
+				var buttonPEB = document.getElementById('buttonPEB');
+				var buttonPEC = document.getElementById('buttonPEC');
+				var l = document.getElementById('l');
+				buttonPEA.className = "buttonPE";
+				buttonPEB.className = "buttonPE";
+				buttonPEC.className = "buttonPE_ACTIVE";
+				l.value = "c";
+			}
+			function save() {
+				var l = document.getElementById('l');
+				var submit = document.getElementById('submit');
+				if (l.value = "a") {
+					submit.value = "Saved to A";
+				}
+				else if (l.value = "b") {
+					submit.value = "Saved to B";
+				}
+				else if (l.value = "c") {
+					submit.value = "Saved to C";
+				}
+				setTimeout(function() { 
+					submit.value = "Create Payload"; 
+				}, 2000);
 			}
 		</script>
     </head>
     <body>
         <ul class="topnav">
-            <li><a href="http://172.16.64.1:80/">Home</a></li>
-			<li><a href="http://172.16.64.1:80/web/payload.html">Payload Launcher</a></li>
-			<li><a class="active" href="http://172.16.64.1:80/web/editor.html">Payload Editor</a></li>
-			<li><a href="http://172.16.64.1:80/web/smb.html">SMB Launcher</a></li>
-			<li class="right"><a class="power" href="http://172.16.64.1:80/web/exit.html">Shutdown</a></li>
+            <li><a href="http://172.16.64.1/">Home</a></li>
+			<li><a href="http://172.16.64.1/launcher">Payload Launcher</a></li>
+			<li><a class="active" href="http://172.16.64.1/editor">Payload Editor</a></li>
+			<li><a href="http://172.16.64.1/smb">SMB Launcher</a></li>
+			<li class="right"><a class="power" href="http://172.16.64.1/exit">Shutdown</a></li>
         </ul>
 		<div style="padding:0 16px; text-align:center;">
             <h2>Payload Editor</h2>
@@ -42,14 +70,14 @@
 			<button id="buttonPEA" class="buttonPE_ACTIVE" onclick="setToA()">Payload A</button>
 			<button id="buttonPEB" class="buttonPE" onclick="setToB()">Payload B</button>
 			<button id="buttonPEC" class="buttonPE" onclick="setToC()">Payload C</button>
-			<form id="form" method="POST">
+			<form id="form" method="post" onsubmit="save()">
 				<input id="l" type="hidden" name="Letter" value="a">
 				<textarea name="Data"># Default Letter for WabbitWeb
 # Output goes to log file in the 'logs' folder - e.g. WabbitWeb_A.log, WabbitWeb_B.log, WabbitWeb_C.log
 LED R
 sleep 1
 echo "Payload was run"</textarea>
-				<input type="submit" value="Create Payload">
+				<input id="submit" type="submit" value="Create Payload">
 			</form>
         </div>
     </body>

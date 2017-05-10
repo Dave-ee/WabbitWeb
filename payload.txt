@@ -1,6 +1,6 @@
 # WabbitWeb
 # 
-# Attack modes: RNDIS
+# Attack modes: RNDIS, HID
 
 GET HOST_IP
 GET SWITCH_POSITION
@@ -30,8 +30,8 @@ mkdir -p "$PAYLOAD_DIR/ww/mfs"
 
 # Mount the Bunny's udisk
 echo "+ Mounting file system.." >> $LOG_FILE
-mount -o bind "/" "$PAYLOAD_DIR/ww/mfs"
-if [ -d "$PAYLOAD_DIR/ww/mfs/root" ]
+mount -o bind "/root/udisk" "$PAYLOAD_DIR/ww/mfs"
+if [ -d "$PAYLOAD_DIR/ww/mfs/payloads" ]
 then
 	echo "+ Successfully mounted directory" >> $LOG_FILE
 else
@@ -56,6 +56,22 @@ LED B SLOW
 echo "+ Waiting for commands.." >> $LOG_FILE
 while ! [ -f "SHUTDOWN" ]
 do
+	# Command received (to be implemented)
+	if [ -f "COMMAND.sh" ]
+	then
+		LED M
+		echo "+ Command received, running it.." >> $LOG_FILE
+		source "$PAYLOAD_DIR/ww/COMMAND.sh" >> $CMD_FILE
+		echo "+ Commands finished" >> $LOG_FILE
+		sleep 2
+		if [ $SMB_LAUNCHED = $false ]
+		then
+			LED B SLOW
+		else
+			LED C SLOW
+		fi
+		rm "COMMAND.sh"
+	fi
 	# Letter A was started
 	if [ -f "LAUNCHER_A" ]
 	then
@@ -65,7 +81,12 @@ do
 		echo "+ Payload A completed" >> $LOG_FILE
 		echo "+ Waiting for commands.." >> $LOG_FILE
 		sleep 2
-		LED B SLOW
+		if [ $SMB_LAUNCHED = $false ]
+		then
+			LED B SLOW
+		else
+			LED C SLOW
+		fi
 		rm "LAUNCHER_A"
 	fi
 	# Letter B was started
@@ -77,7 +98,12 @@ do
 		echo "+ Payload B completed" >> $LOG_FILE
 		echo "+ Waiting for commands.." >> $LOG_FILE
 		sleep 2
-		LED B SLOW
+		if [ $SMB_LAUNCHED = $false ]
+		then
+			LED B SLOW
+		else
+			LED C SLOW
+		fi
 		rm "LAUNCHER_B"
 	fi
 	# Letter C was started
@@ -89,7 +115,12 @@ do
 		echo "+ Payload C completed" >> $LOG_FILE
 		echo "+ Waiting for commands.." >> $LOG_FILE
 		sleep 2
-		LED B SLOW
+		if [ $SMB_LAUNCHED = $false ]
+		then
+			LED B SLOW
+		else
+			LED C SLOW
+		fi
 		rm "LAUNCHER_C"
 	fi
 	# SMB server was started
@@ -127,8 +158,9 @@ do
 	sleep 1
 done
 
-# Shutdown sequence initiated
+# Shutdown sequence initiated - go dark
 LED G
+ATTACKMODE OFF
 # Sync the file system..
 echo "+ Syncing file system.." >> $LOG_FILE
 sync
