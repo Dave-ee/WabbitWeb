@@ -1,4 +1,5 @@
 # WabbitWeb
+#### Payload-handling and SMB service managed by a Python webserver!
 
 Link to WabbitWeb forum post is [here](https://forums.hak5.org/index.php?/topic/40941-payload-wabbitweb/), with information about usage and features.
 
