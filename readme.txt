@@ -1,29 +1,11 @@
 WabbitWeb
 
 Author: 		Dave-ee Jones
-Version: 		1.0.5
+Version: 		1.0.6
 Category: 		Tool/General
 Target: 		Windows 7, 8, 8.1, 10
 Attack: 		RNDIS, HID
 Requires:		Impacket
-
-Features:
-- File Command System (FCS - just to make it fancy and sound like a real method..)
-	- Only real way to handle commands Bash-cross-Python-cross-HTML
-	
-- Payload Editor (more like creator, but that doesn't sound as good)
-	- Write a payload in-browser and save it to a 'Letter' (A, B or C)
-	
-- Payload Launcher (well, just tells the Bunny to run a script really..)
-	- Launch a payload 'Letter' (A, B or C)
-	
-- SMB Launcher (this is pre'ey cool)
-	- Launch an SMB server in the root directory of the Bunny itself
-	- Automatically takes you to the location of the SMB server via Windows Explorer popup
-	- Accessible as: \\172.16.64.1\s
-
-- Shutdown (yes, this is a feature)
-	- Shuts down WabbitWeb
 
 LED Configuration:
 					

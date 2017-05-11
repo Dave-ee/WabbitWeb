@@ -2,9 +2,9 @@
 <html>
     <head>
         <meta charset="utf-8">
-		<title>WabbitWeb - Editor</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>WabbitWeb</title>
 		<link rel="shortcut icon" href="http://172.16.64.1/icon" type="image/x-icon">
-        <meta name="description" content="">
         <link rel="stylesheet" href="http://172.16.64.1/css">
 		<script>
 			function setToA() {
@@ -12,9 +12,9 @@
 				var buttonPEB = document.getElementById('buttonPEB');
 				var buttonPEC = document.getElementById('buttonPEC');
 				var l = document.getElementById('l');
-				buttonPEA.className = "buttonPE_ACTIVE";
-				buttonPEB.className = "buttonPE";
-				buttonPEC.className = "buttonPE";
+				buttonPEA.className = "buttonEditor_ACTIVE";
+				buttonPEB.className = "buttonEditor";
+				buttonPEC.className = "buttonEditor";
 				l.value = "a";
 			}
 			function setToB() {
@@ -22,9 +22,9 @@
 				var buttonPEB = document.getElementById('buttonPEB');
 				var buttonPEC = document.getElementById('buttonPEC');
 				var l = document.getElementById('l');
-				buttonPEA.className = "buttonPE";
-				buttonPEB.className = "buttonPE_ACTIVE";
-				buttonPEC.className = "buttonPE";
+				buttonPEA.className = "buttonEditor";
+				buttonPEB.className = "buttonEditor_ACTIVE";
+				buttonPEC.className = "buttonEditor";
 				l.value = "b";
 			}
 			function setToC() {
@@ -32,22 +32,24 @@
 				var buttonPEB = document.getElementById('buttonPEB');
 				var buttonPEC = document.getElementById('buttonPEC');
 				var l = document.getElementById('l');
-				buttonPEA.className = "buttonPE";
-				buttonPEB.className = "buttonPE";
-				buttonPEC.className = "buttonPE_ACTIVE";
+				buttonPEA.className = "buttonEditor";
+				buttonPEB.className = "buttonEditor";
+				buttonPEC.className = "buttonEditor_ACTIVE";
 				l.value = "c";
 			}
 			function save() {
-				var l = document.getElementById('l');
 				var submit = document.getElementById('submit');
-				if (l.value = "a") {
+				if (l.value === "a") {
 					submit.value = "Saved to A";
 				}
-				else if (l.value = "b") {
+				else if (l.value === "b") {
 					submit.value = "Saved to B";
 				}
-				else if (l.value = "c") {
+				else if (l.value === "c") {
 					submit.value = "Saved to C";
+				}
+				else {
+					submit.value = "No letter chosen";
 				}
 				setTimeout(function() { 
 					submit.value = "Create Payload"; 
@@ -56,28 +58,28 @@
 		</script>
     </head>
     <body>
-        <ul class="topnav">
+        <ul class="sidenav">
             <li><a href="http://172.16.64.1/">Home</a></li>
 			<li><a href="http://172.16.64.1/launcher">Payload Launcher</a></li>
 			<li><a class="active" href="http://172.16.64.1/editor">Payload Editor</a></li>
 			<li><a href="http://172.16.64.1/smb">SMB Launcher</a></li>
 			<li class="right"><a class="power" href="http://172.16.64.1/exit">Shutdown</a></li>
         </ul>
-		<div style="padding:0 16px; text-align:center;">
+		<div class="content">
             <h2>Payload Editor</h2>
             <p>Create a new Payload with this editor!</p>
 			<p>Choose a Payload letter (A, B or C) and get creating!</p>
-			<button id="buttonPEA" class="buttonPE_ACTIVE" onclick="setToA()">Payload A</button>
-			<button id="buttonPEB" class="buttonPE" onclick="setToB()">Payload B</button>
-			<button id="buttonPEC" class="buttonPE" onclick="setToC()">Payload C</button>
+			<button id="buttonPEA" class="buttonEditor" onclick="setToA()">Payload A</button>
+			<button id="buttonPEB" class="buttonEditor" onclick="setToB()">Payload B</button>
+			<button id="buttonPEC" class="buttonEditor" onclick="setToC()">Payload C</button>
 			<form id="form" method="post" onsubmit="save()">
 				<input id="l" type="hidden" name="Letter" value="a">
-				<textarea name="Data"># Default Letter for WabbitWeb
-# Output goes to log file in the 'logs' folder - e.g. WabbitWeb_A.log, WabbitWeb_B.log, WabbitWeb_C.log
+				<textarea name="Data"># Example Letter for WabbitWeb
+# Output goes to log file in the 'logs' folder - e.g. WabbitWeb_A.log
 LED R
 sleep 1
 echo "Payload was run"</textarea>
-				<input id="submit" type="submit" value="Create Payload">
+				<input id="submit" class="buttonEditor" type="submit" value="Create Payload">
 			</form>
         </div>
     </body>

@@ -19,6 +19,7 @@ ROUTES = [
 	('/a','/web/la.html'),
 	('/b','/web/lb.html'),
 	('/c','/web/lc.html'),
+	('/startsmb','/web/smbs.html'),
 	('/css','/web/style.css'),
 	('/icon','/web/icon.ico')
 ]
@@ -68,7 +69,7 @@ class http_handler(SimpleHTTPRequestHandler):
 				f = open(rootdir + "/LAUNCHER_C","w+")
 				f.write("LAUNCH PAYLOAD C")
 				f.close()
-			elif p.endswith('/smb.html'):
+			elif p.endswith('/smbs.html'):
 				f = open(rootdir + "/LAUNCHER_SMB","w+")
 				f.write("LAUNCH SMB SERVER")
 				f.close()
@@ -99,10 +100,6 @@ class http_handler(SimpleHTTPRequestHandler):
 			f.close()
 		elif letter == "c":
 			f = open(rootdir + "/scripts/lc.sh","w")
-			f.write(data)
-			f.close()
-		else:
-			f = open(rootdir + "/scripts/error.sh","w")
 			f.write(data)
 			f.close()
 

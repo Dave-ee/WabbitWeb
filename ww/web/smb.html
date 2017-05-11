@@ -2,22 +2,33 @@
 <html>
     <head>
         <meta charset="utf-8">
-		<title>WabbitWeb - SMB</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>WabbitWeb</title>
 		<link rel="shortcut icon" href="http://172.16.64.1/icon" type="image/x-icon">
-        <meta name="description" content="">
         <link rel="stylesheet" href="http://172.16.64.1/css">
+		<script>
+			function start() {
+				window.open("http://172.16.64.1/startsmb","_self")
+			}
+		</script>
     </head>
     <body>
-        <ul class="topnav">
+        <ul class="sidenav">
             <li><a href="http://172.16.64.1/">Home</a></li>
 			<li><a href="http://172.16.64.1/launcher">Payload Launcher</a></li>
 			<li><a href="http://172.16.64.1/editor">Payload Editor</a></li>
 			<li><a class="active" href="http://172.16.64.1/smb">SMB Launcher</a></li>
 			<li class="right"><a class="power" href="http://172.16.64.1/exit">Shutdown</a></li>
         </ul>
-		<div style="padding:0 16px; text-align:center;">
+		<div class="content">
             <h2>SMB Launcher</h2>
-            <p class="warning">Don't touch anything until the LED starts slowly flashing cyan/blue.</p>
+            <p>When you press the 'Launch SMB server' button, the Bunny's LED will either turn solid cyan or flash red.</p>
+			<p>If it is successful, it will start flashing cyan, and Windows Explorer will open to the SMB server.</p>
+			<p>If the Bunny flashes red it means you don't have Impacket installed.</p>
+			<br>
+			<p class="warning">WHEN YOU START THE SMB SERVER, DON'T TOUCH ANYTHING UNTIL IT STARTS FLASHING BLUE/CYAN!</p>
+			<br>
+			<button class="buttonSMB" onclick="start()">Launch SMB server</button>
         </div>
     </body>
 </html>

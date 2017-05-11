@@ -8,168 +8,179 @@
             font-family: calibri, arial, sans-serif;
             background-color: #202020;
             color: white;
+			margin: 0;
         }
 		h2 {
 			color: #00c7ff;
 		}
 		textarea {
 			display: block;
-			width: 80%;
+			width: 100%;
 			height: 200px;
-			margin: auto;
-			box-sizing: border-box;
+			margin: 0;
 			border: 2px solid #00c7ff;
-			border-radius: 4px;
-			background-color: #404040;
+			background: #404040;
 			font-size: 16px;
 			color: white;
 			resize: vertical;
+			outline: none;
 		}
 		p.warning {
-			display: inline;
-			color: #ff0000;
-			background-color: #404040;
-			padding: 15px;
-			font-size: 20px;
+			background: #af0000;
+			width: 100%;
+			color: #ffffff;
+			line-height: 200%;
+			padding: 8px 16px;
 		}
-		input[type=submit] {
-			background: #00c7ff;
-			background: -webkit-linear-gradient(90deg, #00c7ff, #004fb7);
-			background: -o-linear-gradient(90deg, #00c7ff, #004fb7);
-			background: -moz-linear-gradient(90deg, #00c7ff, #004fb7);
-			background: linear-gradient(90deg, #00c7ff, #004fb7);
-            border: none;
-			border-radius: 5px 25px;
-            color: white;
-            padding: 15px 32px;
-			margin-top: 10px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-			font-size: 16px;
-            cursor: pointer;
-			width: 40%;
-            height: 20%;
-			box-shadow: 5px 5px #404040;
+		.buttonSMB {
+			background: #00617c;
+			color: #ffffff;
+			border: none;
+			padding: 15px 32px;
+			width: 100%;
+			text-align: center;
+			display: block;
+			float: none;
 		}
-		input[type=submit]:hover {
-            	background: #00c7ff;
-        }
-        .exit {
-           	height: 400px;
-            position: relative;
-            text-align: center;
-        }
-        .exit h1 {
-            margin: 0;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-        .buttonBig {
+		.buttonSMB:hover {
 			background: #00c7ff;
-			background: -webkit-linear-gradient(90deg, #00c7ff, #004fb7);
-			background: -o-linear-gradient(90deg, #00c7ff, #004fb7);
-			background: -moz-linear-gradient(90deg, #00c7ff, #004fb7);
-			background: linear-gradient(90deg, #00c7ff, #004fb7);
-            border: none;
-			border-radius: 5px 25px;
-            color: white;
-            padding: 15px 32px;
-			margin-bottom: 10px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            cursor: pointer;
-            width: 80%;
-            height: 20%;
-			box-shadow: 5px 5px #404040;
-        }
-        .buttonBig:hover {
-            background: #00c7ff;
-        }
-		.buttonPE {
+			color: #ffffff;
+			cursor: pointer;
+		}
+		.buttonLauncher {
+			background: #00617c;
+			color: #ffffff;
+			border: none;
+			padding: 15px 32px;
+			width: 33%;
+			text-align: center;
+			display: inline-block;
+			float: none;
+		}
+		.buttonLauncher:hover {
 			background: #00c7ff;
-			background: -webkit-linear-gradient(90deg, #00c7ff, #004fb7);
-			background: -o-linear-gradient(90deg, #00c7ff, #004fb7);
-			background: -moz-linear-gradient(90deg, #00c7ff, #004fb7);
-			background: linear-gradient(90deg, #00c7ff, #004fb7);
-            border: none;
-			border-radius: 5px 25px;
-            color: white;
-            padding: 15px 32px;
-			margin: 10px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            cursor: pointer;
-            width: 20%;
-            height: 20%;
-			box-shadow: 5px 5px #404040;
-        }
-        .buttonPE:hover {
-            background: #00c7ff;
-        }
-		.buttonPE_ACTIVE {
+			color: #ffffff;
+			cursor: pointer;
+		}
+		.buttonEditor {
+			background: #00617c;
+			color: #ffffff;
+			border: none;
+			padding: 15px 32px;
+			width: 20%;
+			text-align: center;
+			display: inline-block;
+			float: none;
+		}
+		.buttonEditor_ACTIVE {
 			background: #00c7ff;
-            border: none;
-			border-radius: 5px 25px;
-            color: white;
-            padding: 15px 32px;
-			margin: 10px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            cursor: pointer;
-            width: 20%;
-            height: 20%;
-			box-shadow: 5px 5px #404040;
-        }
-        ul.topnav {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background-color: #404040;
-			border-radius: 4px 20px;
-        }
-        ul.topnav li a {
-            display: block;
-            color: #00c7ff;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-        }
-        ul.topnav li a:not(.power) {
-            float: left;
-        }
-        ul.topnav li a:hover:not(.power):not(.active) {
-            background: #00c7ff;
-			color: white;
-        }
-        ul.topnav li a.active {
-            background: #00c7ff;
-			color: white;
-        }
-        ul.topnav li.right a {
-            float: right;
-			color: white;
-        }
-        ul.topnav li.right a.power {
-            background: #ba0000;
-        }
-        ul.topnav li.right a.power:hover {
-            background: #00c7ff;
-            float: right;
-        }
-        @media screen and (max-width: 600px) {
-            ul.topnav li.right,
-            ul.topnav li {
+			color: #ffffff;
+			border: none;
+			padding: 15px 32px;
+			width: 20%;
+			text-align: center;
+			display: inline-block;
+			float: none;
+		}
+		.buttonEditor:hover {
+			background: #00c7ff;
+			color: #ffffff;
+			cursor: pointer;
+		}
+		ul.sidenav {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+			width: 20%;
+			background: #505050;
+			position: fixed;
+			height: 100%;
+			overflow: auto;
+		}
+		ul.sidenav li a {
+			font-size: 18px;
+			display: block;
+			color: #ffffff;
+			padding: 8px 32px;
+			text-decoration: none;
+			line-height: 200%;
+		}
+		ul.sidenav li a.active {
+			background: #00c7ff;
+			color: #ffffff;
+		}
+		ul.sidenav li a.power {
+			background: #af0000;
+		}
+		ul.sidenav li a:hover:not(.active) {
+			background: #00617c;
+		}
+		div.content {
+			margin-left: 20%;
+			padding: 1px 16px;
+		}
+		
+		@media screen and (max-width: 980px) {
+			p.warning {
+				text-align: center;
+			}
+			ul.sidenav {
+				width: 100%;
+				height: auto;
+				position: relative;
+			}
+			ul.sidenav li a {
+				font-size: 16px;
+				float: left;
+				padding: 15px;
+				line-height: 100%;
+			}
+			ul.sidenav li a.power {
+				float: right;
+			}
+			div.content {
+				margin-left: 0;
+				text-align: center;
+			}
+			.buttonLauncher {
+				width: 80%;
+				margin: auto;
+				text-align: center;
+				display: block;
+			}
+			.buttonEditor {
+				width: 80%;
+				margin: auto;
+				text-align: center;
+				display: block;
+			}
+			.buttonEditor_ACTIVE {
+				width: 80%;
+				margin: auto;
+				text-align: center;
+				display: block;
+			}
+			.buttonSMB {
+				margin: auto;
+				text-align: center;
+				display: block;
+			}
+		}
+		
+		@media screen and (max-width: 575px) {
+			textarea {
+				margin: auto;
+			}
+			ul.sidenav li a {
+				font-size: 16px;
+				text-align: center;
+				float: none;
+				line-height: 50%;
+			}
+			ul.sidenav li a.power {
+				text-align: center;
 				float: none;
 			}
-        }
+		}
+
 </style>

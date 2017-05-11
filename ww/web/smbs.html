@@ -2,7 +2,7 @@
 <html>
 	<head>
         <meta charset="utf-8">
-        <title>WabbitWeb - Shutdown</title>
+        <title>WabbitWeb - Start SMB</title>
 		<link rel="shortcut icon" href="http://172.16.64.1/icon" type="image/x-icon">
         <meta name="description" content="">
         <style type="text/css">
@@ -15,6 +15,13 @@
             	font-family: calibri, arial, sans-serif;
             	background-color: #202020;
             	color: white;
+			}
+			p.warning {
+				background: #af0000;
+				width: 100%;
+				color: #ffffff;
+				line-height: 200%;
+				text-align: center;
 			}
 			.exit {
 				height: 400px;
@@ -33,7 +40,10 @@
     </head>
     <body>
         <div class="exit">
-            <h1>WabbitWeb has shut down</h1>
+            <h1>Launched SMB server</h1>
+			<p>You may press the 'Back' button when the LED flashes blue/cyan.</p>
+			<br>
+			<p class="warning">DON'T TOUCH ANYTHING UNTIL IT STARTS FLASHING BLUE/CYAN!</p>
         </div>
     </body>
 </html> 
