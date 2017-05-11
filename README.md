@@ -3,6 +3,11 @@
 
 Link to WabbitWeb forum post is [here](https://forums.hak5.org/index.php?/topic/40941-payload-wabbitweb/), with information about usage and features.
 
+### [1.0.6] Minor update
+- Redone the HTML/CSS web layout
+- SMB server no longer instantly starts up when going to the SMB Launcher page
+- Payload Editor is now much easier/nicer to use
+
 ### [1.0.5] Minor update
 - More FCS: 'COMMAND.sh' no longer gets deleted once sourced, it gets saved to 'ww/cmds' directory (if one already exists, it gives it a number on the end of the filename)
 
