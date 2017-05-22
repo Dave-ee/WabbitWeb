@@ -6,10 +6,11 @@ GET HOST_IP
 GET SWITCH_POSITION
 
 # Just so we don't try and start the SMB server 50 times over..
-SMB_LAUNCHED = $false
+SMB_LAUNCHED=$false
 
 # So we can store our COMMAND.sh's
-CMD_NUMBER = 0
+CMD_NUMBER=0
+NAME=COMMAND
 
 # Switch directory
 readonly PAYLOAD_DIR="/root/udisk/payloads/$SWITCH_POSITION"
@@ -18,12 +19,13 @@ readonly LOG_FILE="/root/udisk/logs/WabbitWeb.log"
 readonly LA_FILE="/root/udisk/logs/WabbitWeb_A.log"
 readonly LB_FILE="/root/udisk/logs/WabbitWeb_B.log"
 readonly LC_FILE="/root/udisk/logs/WabbitWeb_C.log"
+readonly CMD_FILE="$PAYLOAD_DIR/ww/command.log"
 
 # Let's start!
 LED SETUP
 mkdir -p "/root/udisk/logs"
 echo "[+]--WABBITWEB STARTED--[+]" >> $LOG_FILE
-if ! [ -d "$PAYLOAD_DIR/ww/" ]
+if ! [ -d "$PAYLOAD_DIR/ww" ]
 then
 	LED FAIL2
 	echo "- Working directory not found" >> $LOG_FILE
@@ -44,6 +46,9 @@ else
 	exit 1
 fi
 
+# Create/wipe the CLI log file
+echo "" > $CMD_FILE
+
 # Prepare the engine
 LED STAGE1
 ATTACKMODE RNDIS_ETHERNET
@@ -55,22 +60,21 @@ python scripts/s.py &
 
 # Sets LED to a slowly flashing blue so we know everything is fine
 LED B SLOW
-
 # Wait for server to shutdown
 echo "+ Waiting for commands.." >> $LOG_FILE
 while ! [ -f "SHUTDOWN" ]
 do
-	# Command received (to be implemented)
+	# Command received
 	if [ -f "COMMAND.sh" ]
 	then
 		LED M
 		echo "+ Command received, running it.." >> $LOG_FILE
+		echo "--COMMAND BEGIN---" >> $CMD_FILE
 		source "$PAYLOAD_DIR/ww/COMMAND.sh" >> $CMD_FILE
-		echo "+ Commands finished" >> $LOG_FILE
-		NAME=COMMAND
+		echo "--COMMAND END---" >> $CMD_FILE
 		if [ -f "cmds/$NAME.sh" ]
 		then
-			i=0
+			i=1
 			while [[ -e "cmds/$NAME-$i.sh" ]] ; do
 				let i++
 			done
@@ -79,7 +83,6 @@ do
 		mv -f "COMMAND.sh" "cmds/$NAME.sh"
 		echo "+ Moved COMMAND.sh to cmds/$NAME.sh" >> $LOG_FILE
 		echo "+ Waiting for commands.." >> $LOG_FILE
-		sleep 2
 		if [ $SMB_LAUNCHED = $false ]
 		then
 			LED B SLOW
@@ -95,7 +98,6 @@ do
 		source "$PAYLOAD_DIR/ww/scripts/la.sh" >> $LA_FILE
 		echo "+ Payload A completed" >> $LOG_FILE
 		echo "+ Waiting for commands.." >> $LOG_FILE
-		sleep 2
 		if [ $SMB_LAUNCHED = $false ]
 		then
 			LED B SLOW
@@ -112,7 +114,6 @@ do
 		source "$PAYLOAD_DIR/ww/scripts/lb.sh" >> $LB_FILE
 		echo "+ Payload B completed" >> $LOG_FILE
 		echo "+ Waiting for commands.." >> $LOG_FILE
-		sleep 2
 		if [ $SMB_LAUNCHED = $false ]
 		then
 			LED B SLOW
@@ -129,7 +130,6 @@ do
 		source "$PAYLOAD_DIR/ww/scripts/lc.sh" >> $LC_FILE
 		echo "+ Payload C completed" >> $LOG_FILE
 		echo "+ Waiting for commands.." >> $LOG_FILE
-		sleep 2
 		if [ $SMB_LAUNCHED = $false ]
 		then
 			LED B SLOW
@@ -179,8 +179,6 @@ ATTACKMODE OFF
 # Sync the file system..
 echo "+ Syncing file system.." >> $LOG_FILE
 sync
-sleep 1
-sync
 echo "+ Unmounting mount directory.." >> $LOG_FILE
 # Unmount the mount directory..
 umount "$PAYLOAD_DIR/ww/mfs"
@@ -189,6 +187,4 @@ rm -r "$PAYLOAD_DIR/ww/mfs"
 # Delete shutdown file (don't want to instantly shutdown next time!)
 rm "$PAYLOAD_DIR/ww/SHUTDOWN"
 echo "[+]--WABBITWEB STOPPED--[+]" >> $LOG_FILE
-LED FINISH
-sleep 1
 LED OFF

@@ -21,7 +21,9 @@ ROUTES = [
 	('/c','/web/lc.html'),
 	('/startsmb','/web/smbs.html'),
 	('/css','/web/style.css'),
-	('/icon','/web/icon.ico')
+	('/icon','/web/icon.ico'),
+	('/cli','/web/cli.html'),
+	('/clilog','/command.log')
 ]
 
 def translate_path(path):
@@ -50,6 +52,9 @@ class http_handler(SimpleHTTPRequestHandler):
 			elif p.endswith('.js'):
 				self.send_response(200)
 				self.send_header('Content-type','application/javascript')
+			elif p.endswith('.txt') or p.endswith('.log'):
+				self.send_response(200)
+				self.send_header('Content-type','text/plain')
 			self.end_headers()
 			f = open(rootdir + p,'r')
 			self.wfile.write(f.read())
@@ -85,24 +90,34 @@ class http_handler(SimpleHTTPRequestHandler):
 			f.close()
 			
 	def do_POST(self):
-		length = int(self.headers['Content-length'])
-		postvars = cgi.parse_qs(self.rfile.read(length), keep_blank_values=1)
-		letter = postvars["Letter"][0]
-		data = postvars["Data"][0]
-		self.send_response(204)
-		if letter == "a":
-			f = open(rootdir + "/scripts/la.sh","w")
+		p = translate_path(self.path)
+		if p.endswith('/editor.html'):
+			length = int(self.headers['Content-length'])
+			postvars = cgi.parse_qs(self.rfile.read(length), keep_blank_values=1)
+			letter = postvars["Letter"][0]
+			data = postvars["Data"][0]
+			self.send_response(204)
+			if letter == "a":
+				f = open(rootdir + "/scripts/la.sh","w")
+				f.write(data)
+				f.close()
+			elif letter == "b":
+				f = open(rootdir + "/scripts/lb.sh","w")
+				f.write(data)
+				f.close()
+			elif letter == "c":
+				f = open(rootdir + "/scripts/lc.sh","w")
+				f.write(data)
+				f.close()
+		elif p.endswith('/cli.html'):
+			length = int(self.headers['Content-length'])
+			postvars = cgi.parse_qs(self.rfile.read(length), keep_blank_values=1)
+			data = postvars["Data"][0]
+			self.send_response(204)
+			f = open(rootdir + "/COMMAND.sh","w")
 			f.write(data)
 			f.close()
-		elif letter == "b":
-			f = open(rootdir + "/scripts/lb.sh","w")
-			f.write(data)
-			f.close()
-		elif letter == "c":
-			f = open(rootdir + "/scripts/lc.sh","w")
-			f.write(data)
-			f.close()
-
+			
 
 def run():
 	httpd = TCPServer(('172.16.64.1',80),http_handler)

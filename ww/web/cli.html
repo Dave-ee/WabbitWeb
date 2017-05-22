@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>WabbitWeb</title>
+		<link rel="shortcut icon" href="http://172.16.64.1/icon" type="image/x-icon">
+        <link rel="stylesheet" href="http://172.16.64.1/css">
+		<script>
+			function showOutput() {
+				var text = document.getElementById('text');
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET","http://172.16.64.1/clilog",true);
+				xhr.onreadystatechange=function() {
+					if (this.readyState!==4) return;
+					text.innerHTML = this.responseText;
+				}
+				xhr.send();
+			}
+			function getOutput() {
+				setTimeout(showOutput, 3500);
+			}
+		</script>
+    </head>
+    <body>
+        <ul class="sidenav">
+            <li><a href="http://172.16.64.1/">Home</a></li>
+			<li><a href="http://172.16.64.1/launcher">Payload Launcher</a></li>
+			<li><a href="http://172.16.64.1/editor">Payload Editor</a></li>
+			<li><a href="http://172.16.64.1/smb">SMB Launcher</a></li>
+			<li><a class="active" href="http://172.16.64.1/cli">Command Line</a></li>
+			<li class="right"><a class="power" href="http://172.16.64.1/exit">Shutdown</a></li>
+        </ul>
+		<div class="content">
+            <h2>Command Line</h2>
+            <p>Pass commands straight to the Bunny!</p>
+			<p>Output appears in the textbox below. It takes about 3 seconds to show the output.</p>
+			<form id="form" method="post" onsubmit="getOutput()">
+				<textarea id="data" name="Data" rows="1" cols="100" style="height:auto;resize:none;" placeholder="echo 'Write your command here..'"></textarea>
+				<input id="submit" class="buttonLauncher" type="submit" value="Execute">
+			</form>
+			<textarea id="text" readonly>Output shows here
+All commands are logged and saved</textarea>
+        </div>
+    </body>
+</html>
