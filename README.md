@@ -3,6 +3,11 @@
 
 Link to WabbitWeb forum post is [here](https://forums.hak5.org/index.php?/topic/40941-payload-wabbitweb/), with information about usage and features.
 
+### [1.1.0] Major update
+- NEW FEATURE! Command Line Interface integrated into the website!
+- Minor code changes / bug fixes
+- Increased overall speed of WabbitWeb
+
 ### [1.0.6] Minor update
 - Redone the HTML/CSS web layout
 - SMB server no longer instantly starts up when going to the SMB Launcher page
