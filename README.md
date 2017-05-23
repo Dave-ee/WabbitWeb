@@ -3,6 +3,10 @@
 
 Link to WabbitWeb forum post is [here](https://forums.hak5.org/index.php?/topic/40941-payload-wabbitweb/), with information about usage and features.
 
+### [1.1.1] Minor update
+- Less boring home page for the website
+- WOOOoooo..
+
 ### [1.1.0] Major update
 - NEW FEATURE! Command Line Interface integrated into the website!
 - Minor code changes / bug fixes
