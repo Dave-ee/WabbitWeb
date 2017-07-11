@@ -49,6 +49,7 @@ fi
 # Create/wipe the CLI log file
 echo "" > $CMD_FILE
 
+
 # Prepare the engine
 LED STAGE1
 ATTACKMODE RNDIS_ETHERNET
@@ -82,6 +83,7 @@ do
 		fi
 		mv -f "COMMAND.sh" "cmds/$NAME.sh"
 		echo "+ Moved COMMAND.sh to cmds/$NAME.sh" >> $LOG_FILE
+		NAME=COMMAND
 		echo "+ Waiting for commands.." >> $LOG_FILE
 		if [ $SMB_LAUNCHED = $false ]
 		then
